@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>안심식당 찾기</title>
+</head>
+<body>
+<div>
+    <a href="/restrList">안심식당 목록보기</a>
+</div>
+<div>
+    <form action="findByAddress" method="get">
+        <input type="text" name="keyword" value="지번주소로 찾기"><input type="submit" value="검색">
+    </form>
+    <form action="findByName" method="get">
+        <input type="text" name="keyword" value="식당명으로 찾기"><input type="submit" value="검색">
+    </form>
+</div>
+
+<div>
+    <a href="/loginPage">로그인</a>
+</div>
+</body>
+</html>

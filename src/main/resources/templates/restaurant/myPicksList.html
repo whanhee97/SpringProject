@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>찜 목록</title>
+</head>
+<body>
+<h1 th:text="${name}+'님의 찜목록'">찜 목록</h1><a href="/">홈으로</a><br>
+<table border="1" align="center">
+    <tr bgcolor="gray">
+        <th>안심번호</th>
+        <th>이름</th>
+        <th>업종</th>
+        <th>상세업종</th>
+        <th>시도</th>
+        <th>시군구</th>
+        <th>주소</th>
+        <th>상세주소</th>
+        <th>지번</th>
+        <th>우편번호</th>
+        <th>도로명</th>
+        <th>전화번호</th>
+        <th>경도</th>
+        <th>위도</th>
+        <th>데이터수집날짜</th>
+    </tr>
+    <tr th:each="R:${myList}">
+        <td th:text="${R.safetyNo}"></td>
+        <td th:text="${R.name}"></td>
+        <td th:text="${R.induType}"></td>
+        <td th:text="${R.detailType}"></td>
+        <td th:text="${R.sido}"></td>
+        <td th:text="${R.signgu}"></td>
+        <td th:text="${R.address}"></td>
+        <td th:text="${R.detailAddress}"></td>
+        <td th:text="${R.jibeon}"></td>
+        <td th:text="${R.zipNo}"></td>
+        <td th:text="${R.doroName}"></td>
+        <td th:text="${R.tell}"></td>
+        <td th:text="${R.logt}"></td>
+        <td th:text="${R.lat}"></td>
+        <td th:text="${R.DTD}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
