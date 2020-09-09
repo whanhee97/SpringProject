@@ -39,4 +39,12 @@ public class MyPicksService {
         }
         return result;
     }
+
+    public void deletePick(String userId,Long restrNum){
+        myPicksDAO.delete(userId,restrNum);
+    }
+
+    public void deleteAllPicks(String userId){
+        myPicksDAO.deleteAll(userId);
+    }
 }
