@@ -12,6 +12,7 @@ import springProj.safeRestaurant.service.MyPicksService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class MypicksController {
@@ -30,7 +31,7 @@ public class MypicksController {
 
     @GetMapping("/showMyPicks")
     public String showMyPicks(HttpSession session, Model model) throws Exception {
-        List<Restaurant> myList = myPicksService.showMyPicks(session.getAttribute("id").toString());
+        Set<Restaurant> myList = myPicksService.showMyPicks(session.getAttribute("id").toString());
         model.addAttribute("myList",myList);
         
         String name = memberService.findNameById(session.getAttribute("id").toString());

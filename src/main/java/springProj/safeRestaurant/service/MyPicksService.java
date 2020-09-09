@@ -8,7 +8,9 @@ import springProj.safeRestaurant.repository.MyPicksDAO;
 import springProj.safeRestaurant.repository.MyPicksDTO;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -29,9 +31,9 @@ public class MyPicksService {
         myPicksDAO.insert(myPicksDTO);
     }
 
-    public List<Restaurant> showMyPicks(String userId) throws Exception {
+    public Set<Restaurant> showMyPicks(String userId) throws Exception {
         List<MyPicksDTO>dtoList = myPicksDAO.findByUserId(userId);
-        List<Restaurant>result = new ArrayList<>();
+        Set<Restaurant>result = new HashSet<>();
         for(MyPicksDTO d : dtoList){
             result.add(restaurantService.get(d.getRestrNum()));
         }
