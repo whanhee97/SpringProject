@@ -13,7 +13,8 @@ public class RestaurantServiceTest {
 
     @Test
     public void 테스트() throws Exception {
-        List<Restaurant> restrList = restaurantService.getRestrList();
-        System.out.println(restrList.get(1).getJibeon());
+        Long l = Long.valueOf(2810);
+        Restaurant restr = restaurantService.get(l);
+        System.out.println(restr.getJibeon());
     }
 }

@@ -23,7 +23,7 @@ public class RestaurantController {
     @GetMapping("restrList")
     public String RestaurantList(Model model, HttpSession session) throws Exception {
 
-        List<Restaurant> list = restaurantService.getRestrList();
+        List<Restaurant> list = restaurantService.getList();
         model.addAttribute("restrList",list);
 
         System.out.println();
