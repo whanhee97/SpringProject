@@ -8,14 +8,14 @@
 <h1>수정할 회원정보를 입력하시오</h1>
 <a href="/">홈으로</a><br>
 <form action="/modifyInfo" method="post">
-    <label>이름 : </label><input type="text" name="name"><br>
-    <label>나이 : </label><input type="text" name="age"><br>
+    <label>이름 : </label><input type="text" name="name" th:value="${member.name}"><br>
+    <label>나이 : </label><input type="text" name="age" th:value="${member.age}"><br>
     <label>성별 : </label>
     <input type="radio" name="gender" id="male" value="male">
     <label for="male">Male</label>
     <input type="radio" name="gender" id="female" value="female">
     <label for="female">Female</label><br>
-    <label>주소 : </label><input type="text" name="address"><br>
+    <label>주소 : </label><input type="text" name="address" th:value="${member.address}"><br>
     <input type="submit" value="변경"><br>
 </form>
 </body>

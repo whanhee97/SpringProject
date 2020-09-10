@@ -33,7 +33,7 @@ public class MypicksController {
     @GetMapping("/showMyPicks")
     public String showMyPicks(HttpSession session, Model model) throws Exception {
         Set<Restaurant> myList = myPicksService.showMyPicks(session.getAttribute("id").toString());
-        model.addAttribute("myList",myList);
+        model.addAttribute("restrList",myList);
         
         String name = memberService.findById(session.getAttribute("id").toString()).getName();
         model.addAttribute("name",name);

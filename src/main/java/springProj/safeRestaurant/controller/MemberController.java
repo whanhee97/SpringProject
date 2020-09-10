@@ -46,7 +46,9 @@ public class MemberController {
     }
 
     @GetMapping("/insertInfo")
-    public String goInsertInfo(){
+    public String goInsertInfo(HttpSession session,Model model){
+        Member member = memberService.findById(session.getAttribute("id").toString());
+        model.addAttribute("member",member);
         return "/members/insertInfo";
     }
 

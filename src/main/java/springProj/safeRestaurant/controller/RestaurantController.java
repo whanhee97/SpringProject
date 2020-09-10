@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import springProj.safeRestaurant.domain.Restaurant;
 import springProj.safeRestaurant.service.RestaurantService;
@@ -59,6 +60,17 @@ public class RestaurantController {
 
     }
 
+    @PostMapping("/showMap")
+    public String showMap(HttpServletRequest request,Model model){
+        String[] restrNumList = request.getParameterValues("restaurant");
+        int index = Integer.parseInt(request.getParameter("submit"));
+
+        //System.out.println(index);
+        Restaurant restaurant = restaurantService.get(Long.parseLong(restrNumList[index]));
+        model.addAttribute("restaurant",restaurant);
+        //return "redirect:/";
+        return "/restaurant/restrInfo";
+    }
 
 
 }

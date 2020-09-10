@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>안심식당 목록</h1><a href="/">홈으로</a><br>
+<form name="form" method="post">
     <table border="1" align="center">
         <tr bgcolor="gray">
             <th>안심번호</th>
@@ -20,11 +21,11 @@
             <th>우편번호</th>
             <th>도로명</th>
             <th>전화번호</th>
-            <th>경도</th>
-            <th>위도</th>
             <th>데이터수집날짜</th>
+            <th>위치</th>
         </tr>
-        <tr th:each="R:${restrList}">
+        <tr th:each="R,index : ${restrList}">
+            <input type="hidden" name="restaurant" th:value="${R.safetyNo}">
             <td th:text="${R.safetyNo}"></td>
             <td th:text="${R.name}"></td>
             <td th:text="${R.induType}"></td>
@@ -37,11 +38,10 @@
             <td th:text="${R.zipNo}"></td>
             <td th:text="${R.doroName}"></td>
             <td th:text="${R.tell}"></td>
-            <td th:text="${R.logt}"></td>
-            <td th:text="${R.lat}"></td>
             <td th:text="${R.DTD}"></td>
+            <td><button type="submit" name="submit" th:value="${index.index}" formaction="/showMap">지도보기</button></td>
         </tr>
     </table>
-
+</form>
 </body>
 </html>
