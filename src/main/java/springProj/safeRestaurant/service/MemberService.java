@@ -6,6 +6,7 @@ import springProj.safeRestaurant.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springProj.safeRestaurant.repository.MemberRepository;
+import springProj.safeRestaurant.repository.MyPicksDAO;
 
 import java.util.Optional;
 
@@ -13,11 +14,11 @@ import java.util.Optional;
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
-
+    private final MyPicksDAO myPicksDAO;
     @Autowired
-    public MemberService(MemberRepository memberRepository){
+    public MemberService(MemberRepository memberRepository, MyPicksDAO myPicksDAO){
         this.memberRepository = memberRepository;
-
+        this.myPicksDAO = myPicksDAO;
     }
 
     public String join(Member member){
@@ -41,7 +42,12 @@ public class MemberService {
         });
         
     }
-    
+
+    public void deleteMemberFromRepo(String id){
+        myPicksDAO.deleteAll(id);
+        memberRepository.delete(id);
+    }
+
     private void IsAlreadyBeen(Member member) {
         memberRepository.findById(member.getId()).ifPresent(m->{
             throw new IllegalStateException("이미 존재하는 아이디입니다.");

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import springProj.safeRestaurant.domain.Member;
 import springProj.safeRestaurant.service.MemberService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -58,9 +59,22 @@ public class MemberController {
     }
 
     @GetMapping("/deleteMemberPWC")
-    public String deleteMemberPWC(Model model){
-        model.addAttribute("what","delete");
-
+    public String deleteMemberPWC(){
         return "/members/pwChecking";
+    }
+
+    @PostMapping("/deleteMember")
+    public String deleteMember(HttpServletRequest request,HttpSession session){
+        String id = session.getAttribute("id").toString();
+        Member member = memberService.findById(id);
+
+        if(member.getPw().equals(request.getParameter("pw"))){ //java에서 String은 항상 equals로 비교하자 ==는 객체의 값이아닌 객체의 주소값을 비교한다.
+            memberService.deleteMemberFromRepo(id);
+            session.invalidate();
+            return "redirect:/";
+        }
+        else {
+            return "redirect:/deleteMemberPWC";
+        }
     }
 }

@@ -34,7 +34,9 @@ public class MemberRepositoryImpl implements MemberRepository{
         return list;
     }
 
-    public void update(Member member){
-
+    @Override
+    public void delete(String id){
+        Member member = em.find(Member.class,id);
+        em.remove(member);
     }
 }
