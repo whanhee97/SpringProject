@@ -35,7 +35,7 @@ public class MypicksController {
         Set<Restaurant> myList = myPicksService.showMyPicks(session.getAttribute("id").toString());
         model.addAttribute("myList",myList);
         
-        String name = memberService.findNameById(session.getAttribute("id").toString());
+        String name = memberService.findById(session.getAttribute("id").toString()).getName();
         model.addAttribute("name",name);
         return "/restaurant/myPicksList";
     }

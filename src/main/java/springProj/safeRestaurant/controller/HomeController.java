@@ -18,7 +18,7 @@ public class HomeController {
     public String home(HttpSession session,Model model){
 
         if(session.getAttribute("loginCheck") == "pass") {
-            String name = memberService.findNameById(session.getAttribute("id").toString());
+            String name = memberService.findById(session.getAttribute("id").toString()).getName();
             model.addAttribute("name",name);
             return "loggedMain";
         }

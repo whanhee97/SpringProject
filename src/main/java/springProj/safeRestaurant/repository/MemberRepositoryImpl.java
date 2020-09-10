@@ -33,4 +33,8 @@ public class MemberRepositoryImpl implements MemberRepository{
         List<Member> list = em.createQuery("select m from Member m",Member.class).getResultList();
         return list;
     }
+
+    public void update(Member member){
+
+    }
 }
