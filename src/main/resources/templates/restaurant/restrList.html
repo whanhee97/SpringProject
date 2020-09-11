@@ -6,6 +6,14 @@
 </head>
 <body>
 <h1>안심식당 목록</h1><a href="/">홈으로</a><br>
+<div>
+    <form action="findByAddress" method="get">
+        <input type="text" name="keyword" value="지번주소로 찾기"><input type="submit" value="검색">
+    </form>
+    <form action="findByName" method="get">
+        <input type="text" name="keyword" value="식당명으로 찾기"><input type="submit" value="검색">
+    </form>
+</div>
 <form name="form" method="post">
     <table border="1" align="center">
         <tr bgcolor="gray">
