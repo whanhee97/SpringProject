@@ -11,14 +11,18 @@ import springProj.safeRestaurant.service.MyPicksService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.http.HttpRequest;
-import java.util.List;
 import java.util.Set;
 
 @Controller
 public class MypicksController {
-    @Autowired MyPicksService myPicksService;
-    @Autowired MemberService memberService;
+    @Autowired private final MyPicksService myPicksService;
+    @Autowired private final MemberService memberService;
+
+    public MypicksController(MyPicksService myPicksService, MemberService memberService) {
+        this.myPicksService = myPicksService;
+        this.memberService = memberService;
+    }
+
     @PostMapping("/saveMypicks")
     public String saveMyPicks(HttpServletRequest request, HttpSession session){
         String[] restrNums = request.getParameterValues("restrNum"); // 이렇게 하면 스트링으로 된 체크박스 벨류들을 가져옴 따라서 long으로 변환 필요

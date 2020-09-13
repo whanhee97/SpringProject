@@ -12,7 +12,11 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
-    @Autowired private MemberService memberService;
+    @Autowired private final MemberService memberService;
+
+    public HomeController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @GetMapping("/")
     public String home(HttpSession session,Model model){

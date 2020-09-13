@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>자유 게시판</title>
+</head>
+<body>
+<h1>게시판 목록</h1><a href="/">홈으로</a><br>
+<a href="/newContent">글작성</a>
+<div>
+    <form action="/" method="get">
+        <input type="text" name="keyword" placeholder="게시글 찾기"><input type="submit" value="검색">
+    </form>
+</div>
+    <table border="1">
+        <tr bgcolor="gray">
+            <th>글 번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>sample</td>
+            <td>whanhee</td>
+            <td>2020/01/01</td>
+            <td>0</td>
+        </tr>
+        <!--
+        <tr th:each="R,index : ${restrList}">
+            <td th:text="${R.safetyNo}"></td>
+            <td th:text="${R.name}"></td>
+            <td th:text="${R.induType}"></td>
+            <td th:text="${R.detailType}"></td>
+            <td th:text="${R.sido}"></td>
+            <td th:text="${R.signgu}"></td>
+            <td th:text="${R.address}"></td>
+            <td th:text="${R.detailAddress}"></td>
+            <td th:text="${R.jibeon}"></td>
+            <td th:text="${R.zipNo}"></td>
+            <td th:text="${R.doroName}"></td>
+            <td th:text="${R.tell}"></td>
+            <td th:text="${R.DTD}"></td>
+            <td><button type="submit" name="submit" th:value="${index.index}" formaction="/showMap">지도보기</button></td>
+        </tr>
+        -->
+    </table>
+
+</body>
+</html>
