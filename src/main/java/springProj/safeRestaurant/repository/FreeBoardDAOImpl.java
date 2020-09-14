@@ -1,6 +1,7 @@
 package springProj.safeRestaurant.repository;
 
 import org.springframework.stereotype.Repository;
+import springProj.safeRestaurant.controller.ContentForm;
 import springProj.safeRestaurant.domain.FreeBoardVO;
 
 import javax.persistence.EntityManager;
@@ -35,7 +36,7 @@ public class FreeBoardDAOImpl implements FreeBoardDAO{
     }
 
     @Override
-    public void update(FreeBoardVO nvo) {
+    public void update(FreeBoardVO nvo) { // bno 와 제목, 내용을 받아옴
         FreeBoardVO vo = em.find(FreeBoardVO.class,nvo.getBno());
         Optional.ofNullable(vo).ifPresent(n->{
             n.setTitle(nvo.getTitle());

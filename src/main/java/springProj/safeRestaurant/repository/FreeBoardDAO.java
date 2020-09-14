@@ -1,5 +1,6 @@
 package springProj.safeRestaurant.repository;
 
+import springProj.safeRestaurant.controller.ContentForm;
 import springProj.safeRestaurant.domain.FreeBoardVO;
 
 import java.util.List;

@@ -20,31 +20,13 @@
             <th>작성일</th>
             <th>조회수</th>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>sample</td>
-            <td>whanhee</td>
-            <td>2020/01/01</td>
-            <td>0</td>
+        <tr th:each="B : ${boardList}" align="center">
+            <td th:text="${B.bno}"></td>
+            <td width=300px><a th:href="@{/boardInfo/{bno}(bno=${B.bno})}" th:utext="${B.title}"></a></td>
+            <td th:text="${B.writer}"></td>
+            <td th:text="${B.regdate}"></td>
+            <td th:text="${B.viewcnt}"></td>
         </tr>
-        <!--
-        <tr th:each="R,index : ${restrList}">
-            <td th:text="${R.safetyNo}"></td>
-            <td th:text="${R.name}"></td>
-            <td th:text="${R.induType}"></td>
-            <td th:text="${R.detailType}"></td>
-            <td th:text="${R.sido}"></td>
-            <td th:text="${R.signgu}"></td>
-            <td th:text="${R.address}"></td>
-            <td th:text="${R.detailAddress}"></td>
-            <td th:text="${R.jibeon}"></td>
-            <td th:text="${R.zipNo}"></td>
-            <td th:text="${R.doroName}"></td>
-            <td th:text="${R.tell}"></td>
-            <td th:text="${R.DTD}"></td>
-            <td><button type="submit" name="submit" th:value="${index.index}" formaction="/showMap">지도보기</button></td>
-        </tr>
-        -->
     </table>
 
 </body>

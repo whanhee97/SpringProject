@@ -2,6 +2,7 @@ package springProj.safeRestaurant.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import springProj.safeRestaurant.controller.ContentForm;
 import springProj.safeRestaurant.domain.FreeBoardVO;
 import springProj.safeRestaurant.repository.FreeBoardDAO;
 
@@ -33,7 +34,10 @@ public class FreeBoardService {
         freeBoardDAO.delete(bno);
     }
 
-    public void update(FreeBoardVO nvo){
+    public void update(Long bno, ContentForm form){
+        FreeBoardVO nvo = freeBoardDAO.boardRead(bno).orElse(null);
+        nvo.setTitle(form.getTitle());
+        nvo.setContent(form.getContent());
         charProcess(nvo);
 
         freeBoardDAO.update(nvo);
@@ -50,21 +54,19 @@ public class FreeBoardService {
     private void charProcess(FreeBoardVO vo) {
         String title = vo.getTitle();
         String content = vo.getContent();
-        String writer = vo.getWriter();
-        // 태그문자 처리 (< -> &lt; > -> &gt;)
+
+        // 태그문자 처리 ('<' -> &lt; , '>' -> &gt;)
         // replace(A,B) A를 B로 변경
         title = title.replace("<","&lt;");
         title = title.replace(">","&gt;");
-        writer = writer.replace("<","&lt;");
-        writer = writer.replace(">","&gt;");
+
         // 공백문자 처리
         title = title.replace(" ","&nbsp;&nbsp;");
-        writer = writer.replace(" ","&nbsp;&nbsp;");
+
         // 줄바꿈 문자처리
         content = content.replace("\n","<br>");
 
         vo.setTitle(title);
         vo.setContent(content);
-        vo.setWriter(writer);
     }
 }

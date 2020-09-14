@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 보기</title>
+</head>
+<body>
+<h1 th:utext="${boardInfo.title}"></h1>
+<a href="/">홈으로</a> <a href="/boardList">목록</a><br>
+<div>
+    <div>
+        <span th:text="'작성자 : '+ ${boardInfo.writer}"></span><br>
+        <span th:text="'조회수 : '+ ${boardInfo.viewcnt}"></span><br>
+        <span th:text="'작성일자 : '+ ${boardInfo.regdate}"></span><br>
+    </div>
+    <br><br>
+    <div>
+        <span th:utext="${boardInfo.content}">내용</span><br> <!-- 문자처리를 해주었기 때문에 utext사용 -->
+    </div>
+    <br><br>
+    <div>
+        <form>
+            <input type="hidden" name="bno" th:value="${boardInfo.bno}">
+            <button formaction="/updateBoard" >수정</button>
+            <button formaction="/deleteBoard" >삭제</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
