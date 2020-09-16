@@ -64,17 +64,16 @@ public class FreeBoardController {
 
         List<ReplyVO> replyList = replyService.getReplyList(bNo);
         model.addAttribute("replyList",replyList);
+        model.addAttribute("on","on"); // on이라는 스트링을 사용하기위해 뷰에 넘겨줌
 
-
+        if(session.getAttribute("checkReplyUpdate") !=null){
+            model.addAttribute("checkReplyUpdate",session.getAttribute("checkReplyUpdate").toString());
+            //checkReplyUpdate를 저장해서 뷰에 넘겨주고 세션해제 뷰에서는 이걸로 체크를 하여 댓글 수정창을 띄울지 말지 결정한다.
+            session.setAttribute("checkReplyUpdate",null);
+        }
 
         if(session.getAttribute("id") != null){ //로그인 여부
             model.addAttribute("userid",session.getAttribute("id").toString());
-            if (session.getAttribute("id").toString().equals(vo.getWriter())){ //작성자와 로그인 되어있는 아이디 같은지
-                return "/freeBoard/loggedBoardInfo";
-            }
-            else{
-                return "/freeBoard/boardInfo";
-            }
         }
         return "/freeBoard/boardInfo";
     }
@@ -129,5 +128,31 @@ public class FreeBoardController {
             return "redirect:/boardInfo/" + bno.toString();
         }
         return "/loginPage";
+    }
+
+    @GetMapping("/deleteReply/{rno}")
+    public String deleteReply(@PathVariable("rno") String rno){
+        Long rNo = Long.parseLong(rno);
+        ReplyVO vo = replyService.ReplyRead(rNo).orElse(null);
+        replyService.delete(rNo);
+        return "redirect:/boardInfo/"+vo.getBno();
+    }
+
+    @GetMapping("/updateReply/{rno}")
+    public String goUpdateReply(@PathVariable("rno") String rno, HttpSession session){
+        Long rNo = Long.parseLong(rno);
+        ReplyVO vo = replyService.ReplyRead(rNo).orElse(null);
+        session.setAttribute("checkReplyUpdate",rno + "on"); //checkReplyUpdate를 (rno)on 으로 세션에 저장하고 넘겨준다
+        // 넘겨준걸 받으면 세션값을 따로변수에 저장하고 세션값은 null로 만들어준다. checkReplyUpdate는 뷰에서 체크에서 같으면 textarea를 띄우고 아님 안띄운다.
+        return "redirect:/boardInfo/"+vo.getBno();
+    }
+
+    @PostMapping("/updateReply/{rno}")
+    public String updateReply(@PathVariable("rno") String rno, HttpSession session, HttpServletRequest request){
+        Long rNo = Long.parseLong(rno);
+        String content = request.getParameter("replyContent");
+        replyService.update(rNo,content);
+        String bno = request.getParameter("bno");
+        return "redirect:/boardInfo/"+bno;
     }
 }

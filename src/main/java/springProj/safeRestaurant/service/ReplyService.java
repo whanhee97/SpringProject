@@ -29,6 +29,8 @@ public class ReplyService {
         return replyDAO.ReplyRead(rno);
     }
     public void delete(long rno){
+        ReplyVO vo = replyDAO.ReplyRead(rno).orElse(null);
+        freeBoardDAO.replyCntDown(vo.getBno());
         replyDAO.delete(rno);
     }
     public void update(Long rno,String newContent){

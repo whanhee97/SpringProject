@@ -15,14 +15,22 @@
     </div>
     <br><br>
     <div>
-        <span th:utext="${boardInfo.content}">내용</span><br>
+        <span th:utext="${boardInfo.content}">내용</span><br> <!-- 문자처리를 해주었기 때문에 utext사용 -->
+    </div>
+    <br><br>
+    <div>
+        <form>
+            <input type="hidden" name="bno" th:value="${boardInfo.bno}">
+            <button th:if="${boardInfo.writer.equals(userid)}" formaction="/updateBoard" >수정</button>
+            <button th:if="${boardInfo.writer.equals(userid)}" formaction="/deleteBoard" >삭제</button>
+        </form>
     </div>
     <div>
         <form method="post">
             <p>댓글:</p>
             <textarea name="replyContent" rows="7" cols="50" placeholder="댓글을 입력해주세요"></textarea>
             <input type="hidden" name="bno" th:value="${boardInfo.bno}">
-            <input type="submit" value="등록" formaction="/addReply" formmethod="post">
+            <input type="submit" value="등록" formaction="/addReply">
         </form>
     </div>
 
@@ -31,9 +39,19 @@
             <span th:text="---------------------------------------------------------"></span>
             <tr>
                 <th align="left" th:text="'작성자: '+${R.writer} + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성일: '+${R.regdate}"></th>
+                <th th:if="${R.writer.equals(userid)}"><a th:href="@{/updateReply/{rno}(rno=${R.rno})}">수정</a></th>
+                <th th:if="${R.writer.equals(userid)}"><a th:href="@{/deleteReply/{rno}(rno=${R.rno})}">삭제</a></th>
             </tr>
             <tr>
-                <td th:utext="${R.content}"></td>
+                <td th:if="${not (R.rno.toString()+on).equals(checkReplyUpdate)}" th:utext="${R.content}"></td>
+                <td th:if="${(R.rno.toString()+on).equals(checkReplyUpdate)}">
+                    <form method="post">
+                        <textarea name="replyContent" rows="7" cols="50" th:utext="${R.content}"></textarea>
+                        <input type="hidden" name="bno" th:value="${boardInfo.bno}">
+                        <input type="submit" value="수정" th:formaction="@{/updateReply/{rno}(rno=${R.rno})}">
+                        <input type="submit" value="취소" formmethod="get" th:formaction="@{/boardInfo/{bno}(bno=${boardInfo.bno})}">
+                    </form>
+                </td>
             </tr>
         </table>
     </div>
