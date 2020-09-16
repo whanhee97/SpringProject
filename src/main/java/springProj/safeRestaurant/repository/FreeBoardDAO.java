@@ -13,4 +13,5 @@ public interface FreeBoardDAO {
     public void update(FreeBoardVO nvo);
     public List<FreeBoardVO> getBoardList();
     public void cntUP(long bno); // 조회수 증가
+    public void replyCntUP(long bno); // 댓글수 증가
 }

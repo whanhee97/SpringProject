@@ -22,7 +22,7 @@
         </tr>
         <tr th:each="B : ${boardList}" align="center">
             <td th:text="${B.bno}"></td>
-            <td width=300px><a th:href="@{/boardInfo/{bno}(bno=${B.bno})}" th:utext="${B.title}"></a></td>
+            <td width=300px><a th:href="@{/boardInfo/{bno}(bno=${B.bno})}" th:utext="${B.title} +'  ('+ ${B.replycnt} +')'"></a></td>
             <td th:text="${B.writer}"></td>
             <td th:text="${B.regdate}"></td>
             <td th:text="${B.viewcnt}"></td>

@@ -29,6 +29,9 @@ public class FreeBoardVO {
     @Column(name="viewcnt")
     long viewcnt; // 조회수
 
+    @Column(name="replycnt")
+    long replycnt; // 댓글수
+
     public long getBno() {
         return bno;
     }
@@ -75,6 +78,14 @@ public class FreeBoardVO {
 
     public void setViewcnt(long viewcnt) {
         this.viewcnt = viewcnt;
+    }
+
+    public long getReplycnt() {
+        return replycnt;
+    }
+
+    public void setReplycnt(long replycnt) {
+        this.replycnt = replycnt;
     }
 }
 

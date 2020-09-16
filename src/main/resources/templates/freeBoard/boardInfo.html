@@ -17,7 +17,26 @@
     <div>
         <span th:utext="${boardInfo.content}">내용</span><br>
     </div>
+    <div>
+        <form method="post">
+            <p>댓글:</p>
+            <textarea name="replyContent" rows="7" cols="50" placeholder="댓글을 입력해주세요"></textarea>
+            <input type="hidden" name="bno" th:value="${boardInfo.bno}">
+            <input type="submit" value="등록" formaction="/addReply" formmethod="post">
+        </form>
+    </div>
 
+    <div>
+        <table th:each="R : ${replyList}">
+            <span th:text="---------------------------------------------------------"></span>
+            <tr>
+                <th align="left" th:text="'작성자: '+${R.writer} + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성일: '+${R.regdate}"></th>
+            </tr>
+            <tr>
+                <td th:utext="${R.content}"></td>
+            </tr>
+        </table>
+    </div>
 </div>
 </body>
 </html>

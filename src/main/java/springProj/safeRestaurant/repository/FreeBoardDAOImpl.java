@@ -58,4 +58,13 @@ public class FreeBoardDAOImpl implements FreeBoardDAO{
             n.setViewcnt(cnt);
         });
     }
+
+    @Override
+    public void replyCntUP(long bno) {
+        FreeBoardVO vo = em.find(FreeBoardVO.class,bno);
+        long cnt = vo.getReplycnt() + 1;
+        Optional.of(vo).ifPresent(n->{
+            n.setReplycnt(cnt);
+        });
+    }
 }

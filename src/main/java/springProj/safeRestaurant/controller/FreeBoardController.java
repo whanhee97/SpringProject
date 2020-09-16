@@ -5,21 +5,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import springProj.safeRestaurant.domain.FreeBoardVO;
+import springProj.safeRestaurant.domain.ReplyVO;
 import springProj.safeRestaurant.service.FreeBoardService;
+import springProj.safeRestaurant.service.ReplyService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class FreeBoardController {
     @Autowired
     private final FreeBoardService freeBoardService;
+    @Autowired
+    private final ReplyService replyService;
 
-    public FreeBoardController(FreeBoardService freeBoardService) {
+    public FreeBoardController(FreeBoardService freeBoardService, ReplyService replyService) {
         this.freeBoardService = freeBoardService;
+        this.replyService = replyService;
     }
 
     @GetMapping("/boardList")
@@ -59,7 +62,13 @@ public class FreeBoardController {
         freeBoardService.cntUP(bNo);
         model.addAttribute("boardInfo",vo);
 
+        List<ReplyVO> replyList = replyService.getReplyList(bNo);
+        model.addAttribute("replyList",replyList);
+
+
+
         if(session.getAttribute("id") != null){ //로그인 여부
+            model.addAttribute("userid",session.getAttribute("id").toString());
             if (session.getAttribute("id").toString().equals(vo.getWriter())){ //작성자와 로그인 되어있는 아이디 같은지
                 return "/freeBoard/loggedBoardInfo";
             }
@@ -101,5 +110,24 @@ public class FreeBoardController {
         Long bNo = Long.parseLong(bno);
         freeBoardService.delete(bNo);
         return "redirect:/";
+    }
+
+    @PostMapping("/addReply")
+    public String addReply(HttpServletRequest request,HttpSession session){
+        if(session.getAttribute("id") != null) {
+
+            String content = request.getParameter("replyContent");
+            Long bno = Long.parseLong(request.getParameter("bno"));
+            String writer = session.getAttribute("id").toString();
+
+            ReplyVO vo = new ReplyVO();
+            vo.setContent(content);
+            vo.setBno(bno);
+            vo.setWriter(writer);
+            replyService.create(vo);
+
+            return "redirect:/boardInfo/" + bno.toString();
+        }
+        return "/loginPage";
     }
 }
