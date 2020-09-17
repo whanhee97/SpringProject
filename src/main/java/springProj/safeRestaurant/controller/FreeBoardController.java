@@ -1,9 +1,11 @@
 package springProj.safeRestaurant.controller;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springProj.safeRestaurant.domain.FreeBoardVO;
 import springProj.safeRestaurant.domain.ReplyVO;
 import springProj.safeRestaurant.service.FreeBoardService;
@@ -11,7 +13,11 @@ import springProj.safeRestaurant.service.ReplyService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class FreeBoardController {
@@ -43,14 +49,30 @@ public class FreeBoardController {
     }
 
     @PostMapping("/createContent")
-    public String createContent(ContentForm form, HttpSession session){
+    public String createContent(ContentForm form, HttpSession session) throws IOException {
         FreeBoardVO vo = new FreeBoardVO();
         vo.setTitle(form.getTitle());
         vo.setContent(form.getContent());
         vo.setWriter(session.getAttribute("id").toString());
         vo.setViewcnt(0);
 
+        // 파일 업로드 처리
+        String fileName = null;
+        MultipartFile uploadFile = form.getUploadFile();
+        if(!uploadFile.isEmpty()){
+            String originalFileName = uploadFile.getOriginalFilename();
+            vo.setOriginFileName(originalFileName);
+            String ext = FilenameUtils.getExtension(originalFileName); // 이름 중복시 확장처리
+
+            UUID uuid = UUID.randomUUID(); // UUID 구하기 (고유식별자)
+            fileName = uuid + "." + ext;
+            uploadFile.transferTo(new File("C:\\Users\\HHLee\\study\\upload\\"+fileName));
+        }
+        /////////////////
+
+        vo.setFileName(fileName);
         freeBoardService.create(vo);
+
         return "redirect:/boardList";
     }
 
@@ -107,7 +129,18 @@ public class FreeBoardController {
     @GetMapping("/deleteBoard")
     public String deleteBoard(@RequestParam("bno") String bno){
         Long bNo = Long.parseLong(bno);
+        FreeBoardVO vo = freeBoardService.boardRead(bNo).orElse(null);
         freeBoardService.delete(bNo);
+
+        // 첨부파일 실제 서버에서 삭제
+        String fileName = vo.getFileName();
+        String path = "C:\\Users\\HHLee\\study\\upload\\" + fileName;
+
+        File file = new File(path);
+        if(file.exists()){
+            file.delete();
+        }
+
         return "redirect:/";
     }
 

@@ -2,6 +2,7 @@ package springProj.safeRestaurant.domain;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,25 +13,59 @@ import java.util.Date;
 public class FreeBoardVO {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long bno; // id
+    private long bno; // id
 
     @Column(name="title")
-    String title; // 제목
+    private String title; // 제목
 
     @Column(name="content")
-    String content; // 내용
+    private String content; // 내용
 
     @Column(name="writer")
-    String writer; // 작성자
+    private String writer; // 작성자
 
     @Column(name="regdate") @Temporal(TemporalType.DATE)
-    Date regdate; // 작성일자
+    private Date regdate; // 작성일자
 
     @Column(name="viewcnt")
-    long viewcnt; // 조회수
+    private long viewcnt; // 조회수
 
     @Column(name="replycnt")
-    long replycnt; // 댓글수
+    private long replycnt; // 댓글수
+
+    @Column(name="file_name")
+    private String fileName;
+
+    @Column(name="org_file_name")
+    private String originFileName;
+
+    @Transient // DB에 적용안됨
+    private MultipartFile uploadFile;
+
+
+    public String getOriginFileName() {
+        return originFileName;
+    }
+
+    public void setOriginFileName(String originFileName) {
+        this.originFileName = originFileName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public MultipartFile getUploadFile() {
+        return uploadFile;
+    }
+
+    public void setUploadFile(MultipartFile uploadFile) {
+        this.uploadFile = uploadFile;
+    }
 
     public long getBno() {
         return bno;

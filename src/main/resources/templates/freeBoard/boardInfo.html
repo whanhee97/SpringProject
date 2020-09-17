@@ -17,6 +17,11 @@
     <div>
         <span th:utext="${boardInfo.content}">내용</span><br> <!-- 문자처리를 해주었기 때문에 utext사용 -->
     </div>
+    <br><br><br>
+    <div>
+        <span>첨부파일 : </span><a th:href="@{/fileDownload/details(fileName=${boardInfo.fileName}, originFileName=${boardInfo.originFileName})}" th:text="${boardInfo.originFileName}"></a>
+    </div>
+
     <br><br>
     <div>
         <form>

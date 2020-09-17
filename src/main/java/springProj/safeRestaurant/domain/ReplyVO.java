@@ -12,19 +12,19 @@ public class ReplyVO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long rno;
+    private long rno;
 
     @Column(name="bno")
-    long bno;
+    private long bno;
 
     @Column(name="content")
-    String content;
+    private String content;
 
     @Column(name="writer")
-    String writer;
+    private String writer;
 
     @Column(name="regdate") @Temporal(TemporalType.DATE)
-    Date regdate;
+    private Date regdate;
 
     public long getRno() {
         return rno;
