@@ -12,6 +12,7 @@ public interface FreeBoardDAO {
     public void delete(long bno);
     public void update(FreeBoardVO nvo);
     public List<FreeBoardVO> getBoardList();
+    public List<FreeBoardVO> getBoardListByID(String id);
     public void cntUP(long bno); // 조회수 증가
     public void replyCntUP(long bno); // 댓글수 증가
     public void replyCntDown(long bno);

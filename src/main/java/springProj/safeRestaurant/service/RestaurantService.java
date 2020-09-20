@@ -25,11 +25,11 @@ public class RestaurantService {
         this.memoryRestrRepository = memoryRestrRepository;
     }
 
-    public List<Restaurant> RestrLisetFoundByAddress(String keyword){
+    public List<Restaurant> RestrListFoundByAddress(String keyword){
         List<Restaurant> list = memoryRestrRepository.findAll();
         return list.stream().filter(r ->r.getJibeon().contains(keyword)).collect(Collectors.toList());
     }
-    public List<Restaurant> RestrLisetFoundByName(String keyword){
+    public List<Restaurant> RestrListFoundByName(String keyword){
         List<Restaurant> list = memoryRestrRepository.findAll();
         return list.stream().filter(r ->r.getName().contains(keyword)).collect(Collectors.toList());
     }

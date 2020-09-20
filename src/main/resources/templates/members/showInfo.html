@@ -15,6 +15,9 @@
     <span th:text="'아이디 : '+ ${member.id}">아이디 : </span><br>
 </div>
 <div>
+    <span><a th:href="@{/myBoard/{id}(id=${member.id})}">내가 쓴 글목록</a></span>
+</div>
+<div>
     <span><a href="/insertInfo">회원정보수정</a></span> <span><a href="/deleteMemberPWC">회원탈퇴</a></span>
 </div>
 </body>

@@ -7,6 +7,9 @@
 <body>
 <h1 th:utext="${boardInfo.title}"></h1>
 <a href="/">홈으로</a> <a href="/boardList">목록</a><br>
+<div th:if="${boardInfo.writer.equals(userid)}">
+    <span><a th:href="@{/myBoard/{id}(id=${boardInfo.writer})}">내가 쓴 글목록</a></span>
+</div>
 <div>
     <div>
         <span th:text="'작성자 : '+ ${boardInfo.writer}"></span><br>
@@ -48,10 +51,10 @@
                 <th th:if="${R.writer.equals(userid)}"><a th:href="@{/deleteReply/{rno}(rno=${R.rno})}">삭제</a></th>
             </tr>
             <tr>
-                <td th:if="${not (R.rno.toString()+on).equals(checkReplyUpdate)}" th:utext="${R.content}"></td>
-                <td th:if="${(R.rno.toString()+on).equals(checkReplyUpdate)}">
+                <td th:if="${not (R.rno.toString()).equals(checkReplyUpdate)}" th:utext="${R.content}"></td>
+                <td th:if="${(R.rno.toString()).equals(checkReplyUpdate)}">
                     <form method="post">
-                        <textarea name="replyContent" rows="7" cols="50" th:utext="${R.content}"></textarea>
+                        <textarea name="replyContent" rows="7" cols="50" th:utext="${viewContent}"></textarea>
                         <input type="hidden" name="bno" th:value="${boardInfo.bno}">
                         <input type="submit" value="수정" th:formaction="@{/updateReply/{rno}(rno=${R.rno})}">
                         <input type="submit" value="취소" formmethod="get" th:formaction="@{/boardInfo/{bno}(bno=${boardInfo.bno})}">

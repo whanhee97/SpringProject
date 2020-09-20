@@ -2,16 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>자유 게시판</title>
+    <title>내가 쓴 게시판</title>
 </head>
 <body>
-<h1>게시판 목록</h1><a href="/">홈으로</a><br>
-<a href="/newContent">글작성</a>
-<div>
-    <form action="/findBoardByKeyword" method="get">
-        <input type="text" name="keyword" placeholder="게시글 찾기"><input type="submit" value="검색">
-    </form>
-</div>
+<h1>내가 쓴 글 목록</h1><a href="/">홈으로</a>
     <table border="1">
         <tr bgcolor="gray">
             <th>글 번호</th>
@@ -28,6 +22,5 @@
             <td th:text="${B.viewcnt}"></td>
         </tr>
     </table>
-
 </body>
 </html>

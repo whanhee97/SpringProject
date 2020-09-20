@@ -38,6 +38,13 @@ public class FreeBoardController {
         return "/freeBoard/boardList";
     }
 
+    @GetMapping("/findBoardByKeyword")
+    public String findBoardByKeyword(@RequestParam("keyword") String keyword,Model model){
+        List<FreeBoardVO> boardList = freeBoardService.getBoardListByKeyword(keyword);
+        model.addAttribute("boardList",boardList);
+        return "/freeBoard/boardList";
+    }
+
     @GetMapping("/newContent")
     public String gotoNewContent(HttpSession session){
         if(session.getAttribute("id") != null){
@@ -86,12 +93,15 @@ public class FreeBoardController {
 
         List<ReplyVO> replyList = replyService.getReplyList(bNo);
         model.addAttribute("replyList",replyList);
-        model.addAttribute("on","on"); // on이라는 스트링을 사용하기위해 뷰에 넘겨줌
 
         if(session.getAttribute("checkReplyUpdate") !=null){
             model.addAttribute("checkReplyUpdate",session.getAttribute("checkReplyUpdate").toString());
             //checkReplyUpdate를 저장해서 뷰에 넘겨주고 세션해제 뷰에서는 이걸로 체크를 하여 댓글 수정창을 띄울지 말지 결정한다.
-            session.setAttribute("checkReplyUpdate",null);
+            long rno = Long.parseLong(session.getAttribute("checkReplyUpdate").toString()); // rno받아서
+            ReplyVO replyVO = replyService.ReplyRead(rno).orElse(null);// 해당 댓글 찾은 뒤
+            String viewContent = replyVO.getContent().replaceAll("<br>","\n"); // <br>을 역변환 시켜주고
+            model.addAttribute("viewContent",viewContent);
+            session.setAttribute("checkReplyUpdate",null); // 체크상태 해제(체크상태 온이면 수정창 열림)
         }
 
         if(session.getAttribute("id") != null){ //로그인 여부
@@ -144,6 +154,14 @@ public class FreeBoardController {
         return "redirect:/";
     }
 
+    @GetMapping("/myBoard/{id}")
+    public String gotoMyBoardList(@PathVariable("id") String id,Model model){
+
+        List<FreeBoardVO> boardList = freeBoardService.getBoardListByID(id);
+        model.addAttribute("boardList",boardList);
+        return "/freeBoard/myBoardList";
+    }
+
     @PostMapping("/addReply")
     public String addReply(HttpServletRequest request,HttpSession session){
         if(session.getAttribute("id") != null) {
@@ -175,7 +193,7 @@ public class FreeBoardController {
     public String goUpdateReply(@PathVariable("rno") String rno, HttpSession session){
         Long rNo = Long.parseLong(rno);
         ReplyVO vo = replyService.ReplyRead(rNo).orElse(null);
-        session.setAttribute("checkReplyUpdate",rno + "on"); //checkReplyUpdate를 (rno)on 으로 세션에 저장하고 넘겨준다
+        session.setAttribute("checkReplyUpdate",rno); //checkReplyUpdate를 rno 으로 세션에 저장하고 넘겨준다
         // 넘겨준걸 받으면 세션값을 따로변수에 저장하고 세션값은 null로 만들어준다. checkReplyUpdate는 뷰에서 체크에서 같으면 textarea를 띄우고 아님 안띄운다.
         return "redirect:/boardInfo/"+vo.getBno();
     }
@@ -188,4 +206,6 @@ public class FreeBoardController {
         String bno = request.getParameter("bno");
         return "redirect:/boardInfo/"+bno;
     }
+
+
 }

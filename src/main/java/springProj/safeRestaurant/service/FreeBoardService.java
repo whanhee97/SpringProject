@@ -8,6 +8,7 @@ import springProj.safeRestaurant.repository.FreeBoardDAO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -45,6 +46,15 @@ public class FreeBoardService {
 
     public List<FreeBoardVO> getBoardList(){
         return freeBoardDAO.getBoardList();
+    }
+
+    public List<FreeBoardVO> getBoardListByID(String id){
+        return freeBoardDAO.getBoardListByID(id);
+    }
+
+    public List<FreeBoardVO> getBoardListByKeyword(String keyword){
+        List<FreeBoardVO> boardList = freeBoardDAO.getBoardList();
+        return boardList.stream().filter(b->b.getTitle().contains(keyword)).collect(Collectors.toList());
     }
 
     public void cntUP(long bno){

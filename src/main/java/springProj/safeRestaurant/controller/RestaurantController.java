@@ -38,7 +38,7 @@ public class RestaurantController {
     }
     @GetMapping("findByAddress")
     public String findByAddress(@RequestParam("keyword") String keyword,Model model,HttpSession session) throws Exception {
-        List<Restaurant> list = restaurantService.RestrLisetFoundByAddress(keyword);
+        List<Restaurant> list = restaurantService.RestrListFoundByAddress(keyword);
         model.addAttribute("restrList",list);
 
 
@@ -50,7 +50,7 @@ public class RestaurantController {
 
     @GetMapping("findByName")
     public String findByName(@RequestParam("keyword") String keyword,Model model,HttpSession session) throws Exception {
-        List<Restaurant> list = restaurantService.RestrLisetFoundByName(keyword);
+        List<Restaurant> list = restaurantService.RestrListFoundByName(keyword);
         model.addAttribute("restrList",list);
 
 

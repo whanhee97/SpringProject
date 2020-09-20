@@ -51,6 +51,14 @@ public class FreeBoardDAOImpl implements FreeBoardDAO{
     }
 
     @Override
+    public List<FreeBoardVO> getBoardListByID(String id) {
+        List<FreeBoardVO> list = em.createQuery("select b from FreeBoardVO b where b.writer=?1",FreeBoardVO.class)
+                .setParameter(1,id)
+                .getResultList();
+        return list;
+    }
+
+    @Override
     public void cntUP(long bno) {
         FreeBoardVO vo = em.find(FreeBoardVO.class,bno);
         long cnt = vo.getViewcnt() + 1;
