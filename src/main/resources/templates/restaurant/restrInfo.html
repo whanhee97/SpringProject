@@ -5,9 +5,37 @@
     <title>식당 정보</title>
 </head>
 <body>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=76af07c0a181a816a0606795f8686703&libraries=services,clusterer,drawing"></script>
 <h1>식당 정보</h1><a href="/">홈으로</a><br>
 <p th:text="'이름 : '+${restaurant.name}">이름</p><br>
 <p th:text="'경도 : '+${restaurant.logt}">경도</p><br>
 <p th:text="'위도 : '+${restaurant.lat}">경도</p><br>
+<input id="logt" name="logt" type="hidden" th:value="${restaurant.logt}">
+<input id="lat" name="lat" type="hidden" th:value="${restaurant.lat}">
+
+<div id="map" style="width:500px;height:400px;"></div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=76af07c0a181a816a0606795f8686703"></script>
+<script>
+		var container = document.getElementById('map');
+		var logt = document.getElementById("logt").value;
+		var lat = document.getElementById("lat").value;
+		var options = {
+			center: new kakao.maps.LatLng(lat, logt),
+			level: 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+		// 마커가 표시될 위치입니다
+        var markerPosition  = new kakao.maps.LatLng(lat, logt);
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+        position: markerPosition
+        });
+
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map);
+</script>
+
 </body>
 </html>

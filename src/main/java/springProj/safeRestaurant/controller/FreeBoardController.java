@@ -97,10 +97,14 @@ public class FreeBoardController {
         if(session.getAttribute("checkReplyUpdate") !=null){
             model.addAttribute("checkReplyUpdate",session.getAttribute("checkReplyUpdate").toString());
             //checkReplyUpdate를 저장해서 뷰에 넘겨주고 세션해제 뷰에서는 이걸로 체크를 하여 댓글 수정창을 띄울지 말지 결정한다.
+
+            /////// rno로 댓글 찾아서 내용 역변환 시켜주기 ////////
             long rno = Long.parseLong(session.getAttribute("checkReplyUpdate").toString()); // rno받아서
             ReplyVO replyVO = replyService.ReplyRead(rno).orElse(null);// 해당 댓글 찾은 뒤
             String viewContent = replyVO.getContent().replaceAll("<br>","\n"); // <br>을 역변환 시켜주고
             model.addAttribute("viewContent",viewContent);
+            //////// rno로 댓글 찾아서 내용 역변환 시켜주기 ////////
+
             session.setAttribute("checkReplyUpdate",null); // 체크상태 해제(체크상태 온이면 수정창 열림)
         }
 
